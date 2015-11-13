@@ -22,9 +22,9 @@ motivated the development of this agent.
 # Building
 
 ```shell
-make JAVA_HOME=/path/to/jdk
+make JAVA_HOME=/path/to/jdk all
 ```
-or just `make` if `JAVA_HOME` is set.
+or just `make` or `make all` if `JAVA_HOME` is set.
 
 # Usage
 

@@ -11,7 +11,7 @@ endif
 CFLAGS=-Wall -Werror -fPIC -shared $(INCLUDE)
 TARGET=libjvmkill.so
 
-.PHONY: all clean test
+.PHONY: all clean test test2
 
 all:
 	gcc $(CFLAGS) \
@@ -31,3 +31,10 @@ test: all
 	    -XX:OnOutOfMemoryError='/bin/echo hello' \
 	    -agentpath:$(PWD)/$(TARGET) \
 	    -cp $(PWD) JvmKillTest
+
+test2: all
+	$(JAVA_HOME)/bin/javac JvmKillTest2.java
+	ulimit -u 
+	$(JAVA_HOME)/bin/java \
+	    -agentpath:$(PWD)/$(TARGET) \
+	    -cp $(PWD) JvmKillTest2
