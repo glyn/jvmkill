@@ -14,7 +14,9 @@ TARGET=libjvmkill.so
 .PHONY: all clean test
 
 all:
-	gcc $(CFLAGS) -o $(TARGET) jvmkill.c
+	gcc $(CFLAGS) \
+		-o $(TARGET) \
+		jvmkill.c
 	chmod 644 $(TARGET)
 
 clean:
@@ -24,7 +26,7 @@ clean:
 
 test: all
 	$(JAVA_HOME)/bin/javac JvmKillTest.java
-	$(JAVA_HOME)/bin/java -Xmx1m \
+	$(JAVA_HOME)/bin/java -Xmx5m \
 	    -XX:+HeapDumpOnOutOfMemoryError \
 	    -XX:OnOutOfMemoryError='/bin/echo hello' \
 	    -agentpath:$(PWD)/$(TARGET) \
