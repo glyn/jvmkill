@@ -17,23 +17,23 @@
 #![allow(dead_code)]
 include!(concat!(env!("OUT_DIR"), "/jvmti_bindings.rs"));
 
-impl Default for jvmtiCapabilities {
-    fn default() -> Self {
-        Self {
-            _bitfield_1: [0; 4],
-            _bitfield_2: [0; 2],
-            _bitfield_3: [0; 2],
-            _bitfield_4: [0; 2],
-            __bindgen_align: [],
-        }
-    }
-}
-
 //impl Default for jvmtiCapabilities {
 //    fn default() -> Self {
 //        Self {
-//            _bitfield_1: [0; 8],
+//            _bitfield_1: [0; 4],
+//            _bitfield_2: [0; 2],
+//            _bitfield_3: [0; 2],
+//            _bitfield_4: [0; 2],
 //            __bindgen_align: [],
 //        }
 //    }
 //}
+
+impl Default for jvmtiCapabilities {
+    fn default() -> Self {
+        Self {
+            _bitfield_1: [0; 8],
+            __bindgen_align: [],
+        }
+    }
+}
