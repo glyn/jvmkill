@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/jvmkill.iml" filepath="$PROJECT_DIR$/jvmkill.iml" />
-      <module fileurl="file://$PROJECT_DIR$/resource-exhaustion-generator/resource-exhaustion-generator.iml" filepath="$PROJECT_DIR$/resource-exhaustion-generator/resource-exhaustion-generator.iml" />
     </modules>
   </component>
 </project>

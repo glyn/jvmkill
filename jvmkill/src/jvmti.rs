@@ -29,67 +29,11 @@ impl Default for jvmtiCapabilities {
     }
 }
 
-impl Default for jvmtiHeapCallbacks {
-    fn default() -> jvmtiHeapCallbacks {
-        Self {
-            heap_iteration_callback: None,
-            heap_reference_callback: None,
-            primitive_field_callback: None,
-            array_primitive_value_callback: None,
-            string_primitive_value_callback: None,
-            reserved5: None,
-            reserved6: None,
-            reserved7: None,
-            reserved8: None,
-            reserved9: None,
-            reserved10: None,
-            reserved11: None,
-            reserved12: None,
-            reserved13: None,
-            reserved14: None,
-            reserved15: None,
-        }
-    }
-}
-
-impl Default for jvmtiEventCallbacks {
-    fn default() -> jvmtiEventCallbacks {
-        Self {
-            VMInit: None,
-            VMDeath: None,
-            ThreadStart: None,
-            ThreadEnd: None,
-            ClassFileLoadHook: None,
-            ClassLoad: None,
-            ClassPrepare: None,
-            VMStart: None,
-            Exception: None,
-            ExceptionCatch: None,
-            SingleStep: None,
-            FramePop: None,
-            Breakpoint: None,
-            FieldAccess: None,
-            FieldModification: None,
-            MethodEntry: None,
-            MethodExit: None,
-            NativeMethodBind: None,
-            CompiledMethodLoad: None,
-            CompiledMethodUnload: None,
-            DynamicCodeGenerated: None,
-            DataDumpRequest: None,
-            reserved72: None,
-            MonitorWait: None,
-            MonitorWaited: None,
-            MonitorContendedEnter: None,
-            MonitorContendedEntered: None,
-            reserved77: None,
-            reserved78: None,
-            reserved79: None,
-            ResourceExhausted: None,
-            GarbageCollectionStart: None,
-            GarbageCollectionFinish: None,
-            ObjectFree: None,
-            VMObjectAlloc: None
-        }
-    }
-}
+//impl Default for jvmtiCapabilities {
+//    fn default() -> Self {
+//        Self {
+//            _bitfield_1: [0; 8],
+//            __bindgen_align: [],
+//        }
+//    }
+//}

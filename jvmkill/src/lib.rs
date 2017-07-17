@@ -18,69 +18,18 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-use std::sync::Mutex;
-
-#[macro_use]
-mod macros;
-mod env;
-mod err;
-mod heap;
 mod jvmti;
-mod agentcontroller;
-
-use env::JvmTI;
-use agentcontroller::MutAction;
 
 #[macro_use]
-extern crate lazy_static;
 extern crate libc;
 extern crate time;
 
-lazy_static! {
-    static ref STATIC_CONTEXT: Mutex<AgentContext<'static>> = Mutex::new(AgentContext::new());
-}
-
-#[derive(Default)]
-struct AgentContext<'a> {
-    ac: Option<agentcontroller::controller::AgentController<'a>>
-}
-
-impl<'a> AgentContext<'a> {
-    pub fn new() -> Self {
-        Default::default()
-    }
-
-    pub fn set(&mut self, a: agentcontroller::controller::AgentController<'a>) {
-        self.ac = Some(a);
-    }
-
-    pub fn on_oom(&mut self, jni_env: ::env::JniEnv, resource_exhaustion_flags: ::jvmti::jint) {
-        self.ac.as_mut().map(|mut a| a.on_oom(jni_env, resource_exhaustion_flags));
-    }
-}
 
 #[no_mangle]
 #[allow(unused_variables)]
-pub extern fn Agent_OnLoad(vm: *mut jvmti::JavaVM, options: *mut ::std::os::raw::c_char,
-                           reserved: *mut ::std::os::raw::c_void) -> jvmti::jint {
-    let jvmti_env = env::JvmTiEnv::new(vm);
+pub extern fn Agent_OnLoad() {
+    let mut capabilities: ::jvmti::jvmtiCapabilities = Default::default();
 
-    if let Err(e) = jvmti_env
-        .and_then(|ti| agentcontroller::controller::AgentController::new(ti, options))
-        .map(|ac| STATIC_CONTEXT.lock().expect("static lock was not acquired").set(ac)) {
-        return e;
-    }
-
-    if let Err(e) = jvmti_env
-        .and_then(|mut ti| {
-            ti.on_resource_exhausted(resource_exhausted).map_err(|err| err.rc())
-        }) {
-        return e;
-    }
-
-    0
+    capabilities.set_can_tag_objects(1);
 }
 
-fn resource_exhausted(_: env::JvmTiEnv, jni_env: env::JniEnv, flags: ::jvmti::jint) {
-    STATIC_CONTEXT.lock().expect("static lock was not acquired").on_oom(jni_env, flags);
-}
