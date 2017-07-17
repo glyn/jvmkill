@@ -21,7 +21,6 @@ use std::path::PathBuf;
 
 fn main() {
     let bindings = bindgen::Builder::default()
-        .no_unstable_rust()
         .header(jvmti_wrapper())
         .clang_arg(clang_include(&java_include()))
         .clang_arg(clang_include(&java_include_platform()))
