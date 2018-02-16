@@ -63,7 +63,7 @@ macro_rules! jvmtifn (
             let fnc = (**$r).$f.expect(&format!("{} function not found", stringify!($f)));
             rc = fnc($r, $($arg)*);
         }
-        if rc != ::jvmti::jvmtiError_JVMTI_ERROR_NONE {
+        if rc != ::jvmti::jvmtiError::JVMTI_ERROR_NONE {
             let message = format!("JVMTI {} failed", stringify!($f));
             Err(::err::Error::JvmTi(message, rc as i32))
         } else {
@@ -83,7 +83,7 @@ impl JvmTI for JvmTiEnv {
 
         let callbacks = ::jvmti::jvmtiEventCallbacks { ResourceExhausted: Some(resource_exhausted), ..Default::default() };
         jvmtifn!(self.jvmti, SetEventCallbacks, &callbacks, size_of::<::jvmti::jvmtiEventCallbacks>() as i32)?;
-        jvmtifn!(self.jvmti, SetEventNotificationMode, ::jvmti::jvmtiEventMode_JVMTI_ENABLE, ::jvmti::jvmtiEvent_JVMTI_EVENT_RESOURCE_EXHAUSTED, ::std::ptr::null_mut())?;
+        jvmtifn!(self.jvmti, SetEventNotificationMode, ::jvmti::jvmtiEventMode::JVMTI_ENABLE, ::jvmti::jvmtiEvent::JVMTI_EVENT_RESOURCE_EXHAUSTED, ::std::ptr::null_mut())?;
 
         Ok(())
     }
