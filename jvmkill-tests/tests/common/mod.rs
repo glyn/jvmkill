@@ -17,8 +17,21 @@
 use std::env;
 use std::path::PathBuf;
 use std::process::Command;
+use libc;
 
 pub fn run_java(class: &str, arguments: &str, expected_stdout: &[&str], expected_stderr: &[&str]) -> bool {
+    unsafe {
+        /*
+        pub unsafe extern "C" fn setrlimit(
+    resource: c_int,
+    rlim: *const rlimit
+) -> c_int
+        */
+        libc::setrlimit(libc::RLIMIT_NPROC, &libc::rlimit{
+            rlim_cur: 220,
+            rlim_max: 220, // 220 crashes macOS
+        });
+    }
     let output = Command::new(&java())
         .arg(format!("-agentpath:{}{}", jvmkill().to_str().unwrap(), arguments))
         .arg("-cp").arg(jvmkill_test().to_str().unwrap())
